@@ -6,12 +6,24 @@ import * as communityActionCreators from "../modules/news";
 const useActionCreators = () => {
   const dispatch = useDispatch();
 
-  const { initStore, setCurrentPage } = useMemo(
+  const {
+    setCurrentPage,
+    openHomeModal,
+    closeHomeModal,
+    openScrapModal,
+    closeScrapModal,
+  } = useMemo(
     () => bindActionCreators(communityActionCreators, dispatch),
     [dispatch]
   );
 
-  return { initStore, setCurrentPage };
+  return {
+    setCurrentPage,
+    openHomeModal,
+    closeHomeModal,
+    openScrapModal,
+    closeScrapModal,
+  };
 };
 
 export default useActionCreators;

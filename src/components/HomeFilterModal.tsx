@@ -43,7 +43,7 @@ const ApplyButton = styled.button`
   }
 `;
 
-const Modal = () => {
+const HomeFilterModal = () => {
   return (
     <>
       <Container>
@@ -57,4 +57,4 @@ const Modal = () => {
   );
 };
 
-export default Modal;
+export default HomeFilterModal;

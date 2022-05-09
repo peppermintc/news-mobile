@@ -1,9 +1,6 @@
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import ArticleList from "../components/ArticleList";
-import HeaderBar from "../components/HeaderBar";
-import Modal from "../components/Modal";
-import { RootState } from "../modules";
+import HomeFilterBar from "../components/HomeFilterBar";
 
 const Container = styled.div`
   width: 100%;
@@ -11,13 +8,10 @@ const Container = styled.div`
 `;
 
 const HomePage = () => {
-  const isModalOn = useSelector((state: RootState) => state.news.isModalOn);
-
   return (
     <Container>
-      <HeaderBar />
+      <HomeFilterBar />
       <ArticleList />
-      {isModalOn && <Modal />}
     </Container>
   );
 };

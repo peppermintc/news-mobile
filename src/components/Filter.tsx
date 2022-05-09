@@ -1,4 +1,7 @@
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import useActionCreators from "../hooks/useActionCreators";
+import { RootState } from "../modules";
 
 interface FilterProps {
   iconSrc?: string;
@@ -25,8 +28,17 @@ const Icon = styled.img`
 `;
 
 const Filter = ({ iconSrc, label }: FilterProps) => {
+  const currentPage = useSelector((state: RootState) => state.news.currentPage);
+
+  const { openHomeModal, openScrapModal } = useActionCreators();
+
+  const onFilterClick = () => {
+    if (currentPage === "home") return openHomeModal();
+    if (currentPage === "scrap") return openScrapModal();
+  };
+
   return (
-    <Container>
+    <Container onClick={onFilterClick}>
       {iconSrc && <Icon src={iconSrc} alt="icon" />}
       <span>{label}</span>
     </Container>

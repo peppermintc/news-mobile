@@ -1,9 +1,6 @@
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import ArticleList from "../components/ArticleList";
-import HeaderBar from "../components/HeaderBar";
-import Modal from "../components/Modal";
-import { RootState } from "../modules";
+import ScrapFilterBar from "../components/ScrapFilterBar";
 
 const Container = styled.div`
   width: 100%;
@@ -11,13 +8,10 @@ const Container = styled.div`
 `;
 
 const ScrapPage = () => {
-  const isModalOn = useSelector((state: RootState) => state.news.isModalOn);
-
   return (
     <Container>
-      <HeaderBar />
+      <ScrapFilterBar />
       <ArticleList />
-      {isModalOn && <Modal />}
     </Container>
   );
 };
