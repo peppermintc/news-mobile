@@ -5,6 +5,10 @@ import useActionCreators from "../hooks/useActionCreators";
 import CalendarGray from "../img/calendarIcon.png";
 import { Filter } from "../interfaces";
 import { RootState } from "../modules";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { ko } from "date-fns/esm/locale";
+import { formatDate } from "../utils";
 
 const COUNTRIES = [
   "대한민국",
@@ -82,7 +86,6 @@ const DateInput = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #c4c4c4;
 `;
 
 const Countries = styled.div`
@@ -114,20 +117,46 @@ const ApplyButton = styled.button`
 `;
 
 const HomeFilterModal = () => {
-  const [filterValues, setFilterValues] = useState<Filter>();
+  const [filterValues, setFilterValues] = useState<Filter | undefined>();
 
   const homeFilter = useSelector((state: RootState) => state.news.homeFilter);
 
   const { closeHomeModal } = useActionCreators();
 
   const onHeadLineInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newCurrentHeadLine = e.target.value;
+    setFilterValues((prevFilterValues: Filter | undefined) => {
+      const newCurrentHeadLine = e.target.value;
+      const newFilterValues: Filter = {
+        modalOpen: prevFilterValues?.modalOpen || false,
+        currentHeadLine: newCurrentHeadLine,
+        currentDate: prevFilterValues?.currentDate || "",
+        currentCountry: prevFilterValues?.currentCountry || "",
+      };
+
+      return newFilterValues;
+    });
+  };
+
+  const onDateChange = (date: Date) => {
+    const newCurrentDate = formatDate(date);
     const newFilterValues: Filter = {
       ...homeFilter,
-      currentHeadLine: newCurrentHeadLine,
+      currentDate: newCurrentDate,
     };
 
     setFilterValues(newFilterValues);
+  };
+
+  const datePickerCustomInput = () => {
+    return (
+      <div>
+        {filterValues?.currentDate ? (
+          filterValues?.currentDate
+        ) : (
+          <span style={{ color: "#c4c4c4" }}>{"날짜를 정해주세요."}</span>
+        )}
+      </div>
+    );
   };
 
   const onApplyButtonClick = () => {
@@ -146,14 +175,20 @@ const HomeFilterModal = () => {
 
           <Label>날짜</Label>
           <DateInput>
-            {"날짜를 정해주세요."}
+            <DatePicker
+              onChange={onDateChange}
+              locale={ko}
+              dateFormat="yyyy.MM.dd"
+              maxDate={new Date()}
+              customInput={datePickerCustomInput()}
+            />
             <img src={CalendarGray} alt="date" />
           </DateInput>
 
           <Label>국가</Label>
           <Countries>
             {COUNTRIES.map((country) => (
-              <CountryButton>{country}</CountryButton>
+              <CountryButton key={country}>{country}</CountryButton>
             ))}
           </Countries>
         </Inputs>
