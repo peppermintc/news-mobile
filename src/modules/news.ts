@@ -7,29 +7,29 @@ interface Action {
 }
 
 export interface NewsState {
-  isAppStateReady: boolean;
+  isModalOn: boolean;
 }
 
 // Action Types
-const SET_CATEGORIES = "SET_CATEGORIES";
+const SET_IS_MODAL_ON = "SET_IS_MODAL_ON";
 
 // Action Creators
 export const initStore = () => async (dispatch: Dispatch) => {
-  dispatch({ type: SET_CATEGORIES, payload: true });
+  // dispatch({ type: SET_IS_MODAL_ON, payload: true });
 };
 
 // Initial State
 const initialState: NewsState = {
-  isAppStateReady: false,
+  isModalOn: false,
 };
 
 // Reducer
 const newsReducer = (state: NewsState = initialState, action: Action) => {
   switch (action.type) {
-    case SET_CATEGORIES:
+    case SET_IS_MODAL_ON:
       return {
         ...state,
-        isAppStateReady: action.payload,
+        isModalOn: action.payload,
       };
     default:
       return state;
