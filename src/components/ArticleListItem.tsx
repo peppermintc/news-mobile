@@ -17,7 +17,7 @@ const SectionTop = styled.div`
 const SectionBottom = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  margin-top: 8px;
 `;
 
 const Title = styled.div`
@@ -36,6 +36,22 @@ const StarIcon = styled.img`
   align-items: center;
 `;
 
+const Source = styled.span`
+  font-size: 13px;
+  margin-right: 8px;
+`;
+
+const Author = styled.span`
+  font-size: 13px;
+`;
+
+const Date = styled.span`
+  font-size: 13px;
+  color: #6d6d6d;
+  flex: 1;
+  text-align: right;
+`;
+
 const ArticleListItem = () => {
   return (
     <Container>
@@ -44,8 +60,9 @@ const ArticleListItem = () => {
         <StarIcon src={StarIconOff} alt="star" />
       </SectionTop>
       <SectionBottom>
-        <div>조선일보 김정화 기자</div>
-        <div>2021.3.15. (목)</div>
+        <Source>조선일보</Source>
+        <Author>김정화 기자</Author>
+        <Date>2021.3.15. (목)</Date>
       </SectionBottom>
     </Container>
   );
