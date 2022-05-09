@@ -1,7 +1,7 @@
 export type Page = "home" | "scrap";
 
-export interface Modal {
-  open: boolean;
+export interface Filter {
+  modalOpen: boolean;
   currentHeadLine: string;
   currentDate: string;
   currentCountry: string;

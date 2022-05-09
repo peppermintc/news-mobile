@@ -18,8 +18,8 @@ const Container = styled.div`
 `;
 
 const HomeFilterBar = () => {
-  const isHomeModalOn = useSelector(
-    (state: RootState) => state.news.homeModal.open
+  const isHomeModalOpen = useSelector(
+    (state: RootState) => state.news.homeFilter.modalOpen
   );
 
   return (
@@ -29,7 +29,7 @@ const HomeFilterBar = () => {
         <Filter iconSrc={CalendarIcon} label={"전체 날짜"} />
         <Filter label={"전체 국가"} />
       </Container>
-      {isHomeModalOn && <HomeFilterModal />}
+      {isHomeModalOpen && <HomeFilterModal />}
     </>
   );
 };

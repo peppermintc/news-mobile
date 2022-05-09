@@ -18,8 +18,8 @@ const Container = styled.div`
 `;
 
 const ScrapFilterBar = () => {
-  const isScrapModalOn = useSelector(
-    (state: RootState) => state.news.scrapModal.open
+  const isScrapModalOpen = useSelector(
+    (state: RootState) => state.news.scrapFilter.modalOpen
   );
 
   return (
@@ -29,7 +29,7 @@ const ScrapFilterBar = () => {
         <Filter iconSrc={CalendarIcon} label={"전체 날짜"} />
         <Filter label={"전체 국가"} />
       </Container>
-      {isScrapModalOn && <ScrapFilterModal />}
+      {isScrapModalOpen && <ScrapFilterModal />}
     </>
   );
 };
