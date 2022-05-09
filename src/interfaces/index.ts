@@ -1,1 +1,1 @@
-export {};
+export type Page = "home" | "scrap";
