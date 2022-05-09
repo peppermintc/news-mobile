@@ -30,6 +30,19 @@ const Label = styled.div`
   margin-bottom: 7px;
 `;
 
+const ApplyButton = styled.button`
+  border: none;
+  background-color: #3478f6;
+  border-radius: 16px;
+  color: white;
+  font-weight: 600;
+  width: 100%;
+  height: 60px;
+  &:focus {
+    outline: none;
+  }
+`;
+
 const Modal = () => {
   return (
     <>
@@ -37,6 +50,7 @@ const Modal = () => {
         <Label>헤드라인</Label>
         <Label>날짜</Label>
         <Label>국가</Label>
+        <ApplyButton>필터 적용하기</ApplyButton>
       </Container>
       <Background />
     </>
