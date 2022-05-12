@@ -150,8 +150,13 @@ const HomeFilterModal = () => {
 
   const onCountryButtonClick = (country: string) => {
     let newCountry;
-    if (filterValues === undefined) newCountry = [country];
-    else newCountry = [...filterValues.country, country];
+    if (filterValues === undefined) {
+      newCountry = [country];
+    } else if (filterValues.country.includes(country)) {
+      newCountry = [...filterValues.country.filter((c) => c !== country)];
+    } else {
+      newCountry = [...filterValues.country, country];
+    }
 
     const newFilterValues: Filter = {
       ...homeFilter,
