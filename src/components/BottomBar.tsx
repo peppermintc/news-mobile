@@ -30,6 +30,7 @@ const Button = styled.button<{ isSelected: boolean }>`
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
   color: ${({ isSelected }) => (isSelected ? "white" : "#6d6d6d")};
 `;
 

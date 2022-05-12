@@ -19,6 +19,7 @@ const Container = styled.div`
   padding: 6px 12px 6px 12px;
   font-size: 14px;
   color: #6d6d6d;
+  cursor: pointer;
 `;
 
 const Icon = styled.img`
