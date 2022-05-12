@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import FilterButton from "./FilterButton";
 import SearchIcon from "../img/searchIcon.png";
+import SearchIconBlue from "../img/searchIconBlue.png";
 import CalendarIcon from "../img/calendarIcon.png";
+import CalendarIconBlue from "../img/calendarIconBlue.png";
 import HomeFilterModal from "./HomeFilterModal";
 import { useSelector } from "react-redux";
 import { RootState } from "../modules";
@@ -21,13 +23,31 @@ const HomeFilterBar = () => {
   const isHomeModalOpen = useSelector(
     (state: RootState) => state.news.homeFilter.modalOpen
   );
+  const homeFilter = useSelector((state: RootState) => state.news.homeFilter);
+
+  const getCountryLabel = () => {
+    if (homeFilter.country.length === 0) return "전체 국가";
+    else
+      return `${homeFilter.country[0]} 외 ${homeFilter.country.length - 1}개`;
+  };
 
   return (
     <>
       <Container>
-        <FilterButton iconSrc={SearchIcon} label={"전체 헤드라인"} />
-        <FilterButton iconSrc={CalendarIcon} label={"전체 날짜"} />
-        <FilterButton label={"전체 국가"} />
+        <FilterButton
+          iconSrc={homeFilter.headline === "" ? SearchIcon : SearchIconBlue}
+          label={homeFilter.headline || "전체 헤드라인"}
+          isSelected={homeFilter.headline !== ""}
+        />
+        <FilterButton
+          iconSrc={homeFilter.date === "" ? CalendarIcon : CalendarIconBlue}
+          label={homeFilter.date || "전체 날짜"}
+          isSelected={homeFilter.date !== ""}
+        />
+        <FilterButton
+          label={getCountryLabel()}
+          isSelected={homeFilter.country.length !== 0}
+        />
       </Container>
       {isHomeModalOpen && <HomeFilterModal />}
     </>

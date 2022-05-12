@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import useActionCreators from "../hooks/useActionCreators";
@@ -123,6 +123,10 @@ const HomeFilterModal = () => {
   const homeFilter = useSelector((state: RootState) => state.news.homeFilter);
 
   const { closeHomeModal, setHomeFilter } = useActionCreators();
+
+  useEffect(() => {
+    setFilterValues(homeFilter);
+  }, []);
 
   const onHeadLineInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newHeadLine = e.target.value;

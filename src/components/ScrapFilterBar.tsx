@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import Filter from "./FilterButton";
 import SearchIcon from "../img/searchIcon.png";
 import CalendarIcon from "../img/calendarIcon.png";
 import { useSelector } from "react-redux";
 import { RootState } from "../modules";
 import ScrapFilterModal from "./ScrapFilterModal";
+import FilterButton from "./FilterButton";
 
 const Container = styled.div`
   width: 100%;
@@ -25,9 +25,9 @@ const ScrapFilterBar = () => {
   return (
     <>
       <Container>
-        <Filter iconSrc={SearchIcon} label={"전체 헤드라인"} />
-        <Filter iconSrc={CalendarIcon} label={"전체 날짜"} />
-        <Filter label={"전체 국가"} />
+        {/* <FilterButton iconSrc={SearchIcon} label={"전체 헤드라인"} />
+        <FilterButton iconSrc={CalendarIcon} label={"전체 날짜"} />
+        <FilterButton label={"전체 국가"} /> */}
       </Container>
       {isScrapModalOpen && <ScrapFilterModal />}
     </>

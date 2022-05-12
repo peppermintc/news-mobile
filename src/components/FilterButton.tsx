@@ -6,9 +6,10 @@ import { RootState } from "../modules";
 interface FilterButtonProps {
   iconSrc?: string;
   label: string;
+  isSelected: boolean;
 }
 
-const Container = styled.div`
+const Container = styled.div<{ isSelected: boolean }>`
   height: 34px;
   border: 1px solid #c4c4c4;
   background-color: white;
@@ -18,8 +19,9 @@ const Container = styled.div`
   align-items: center;
   padding: 6px 12px 6px 12px;
   font-size: 14px;
-  color: #6d6d6d;
   cursor: pointer;
+  color: ${({ isSelected }) => (isSelected ? "#82B0F4" : "#6d6d6d")};
+  border-color: ${({ isSelected }) => (isSelected ? "#82B0F4" : "#c4c4c4")};
 `;
 
 const Icon = styled.img`
@@ -28,7 +30,7 @@ const Icon = styled.img`
   margin-right: 4px;
 `;
 
-const FilterButton = ({ iconSrc, label }: FilterButtonProps) => {
+const FilterButton = ({ iconSrc, label, isSelected }: FilterButtonProps) => {
   const currentPage = useSelector((state: RootState) => state.news.currentPage);
 
   const { openHomeModal, openScrapModal } = useActionCreators();
@@ -39,7 +41,7 @@ const FilterButton = ({ iconSrc, label }: FilterButtonProps) => {
   };
 
   return (
-    <Container onClick={onFilterClick}>
+    <Container onClick={onFilterClick} isSelected={isSelected}>
       {iconSrc && <Icon src={iconSrc} alt="icon" />}
       <span>{label}</span>
     </Container>
