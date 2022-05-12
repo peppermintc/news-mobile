@@ -98,13 +98,13 @@ const initialState: NewsState = {
     modalOpen: false,
     headline: "",
     date: "",
-    country: "",
+    country: [],
   },
   scrapFilter: {
     modalOpen: false,
     headline: "",
     date: "",
-    country: "",
+    country: [],
   },
 };
 

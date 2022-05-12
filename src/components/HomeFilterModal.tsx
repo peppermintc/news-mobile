@@ -125,17 +125,13 @@ const HomeFilterModal = () => {
   const { closeHomeModal, setHomeFilter } = useActionCreators();
 
   const onHeadLineInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFilterValues((prevFilterValues: Filter | undefined) => {
-      const newHeadLine = e.target.value;
-      const newFilterValues: Filter = {
-        modalOpen: prevFilterValues?.modalOpen || false,
-        headline: newHeadLine,
-        date: prevFilterValues?.date || "",
-        country: prevFilterValues?.country || "",
-      };
+    const newHeadLine = e.target.value;
+    const newFilterValues: Filter = {
+      ...homeFilter,
+      headline: newHeadLine,
+    };
 
-      return newFilterValues;
-    });
+    setFilterValues(newFilterValues);
   };
 
   const onDateChange = (date: Date) => {
@@ -149,7 +145,10 @@ const HomeFilterModal = () => {
   };
 
   const onCountryButtonClick = (country: string) => {
-    const newCountry = country;
+    let newCountry;
+    if (filterValues === undefined) newCountry = [country];
+    else newCountry = [...filterValues.country, country];
+
     const newFilterValues: Filter = {
       ...homeFilter,
       country: newCountry,
@@ -205,7 +204,9 @@ const HomeFilterModal = () => {
               <CountryButton
                 key={country}
                 onClick={() => onCountryButtonClick(country)}
-                isSelected={filterValues?.country === country}
+                isSelected={
+                  filterValues?.country.includes(country) ? true : false
+                }
               >
                 {country}
               </CountryButton>

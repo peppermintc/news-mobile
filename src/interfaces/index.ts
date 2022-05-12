@@ -4,7 +4,7 @@ export interface Filter {
   modalOpen: boolean;
   headline: string;
   date: string;
-  country: string;
+  country: string[];
 }
 
 export interface Article {
