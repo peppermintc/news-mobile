@@ -14,12 +14,16 @@ const Container = styled.div`
 `;
 
 const HomePage = () => {
-  const { homeArticles } = useSelector((state: RootState) => state.news);
+  const { homeArticles, homeFilter } = useSelector(
+    (state: RootState) => state.news
+  );
   const { setHomeArticles } = useActionCreators();
 
   useEffect(() => {
-    axiosGetArticles().then(({ response }) => setHomeArticles(response.docs));
-  }, [setHomeArticles]);
+    axiosGetArticles(homeFilter).then(({ response }) =>
+      setHomeArticles(response.docs)
+    );
+  }, [setHomeArticles, homeFilter]);
 
   return (
     <Container>
