@@ -3,7 +3,7 @@ import styled from "styled-components";
 import useActionCreators from "../hooks/useActionCreators";
 import { RootState } from "../modules";
 
-interface FilterProps {
+interface FilterButtonProps {
   iconSrc?: string;
   label: string;
 }
@@ -28,7 +28,7 @@ const Icon = styled.img`
   margin-right: 4px;
 `;
 
-const Filter = ({ iconSrc, label }: FilterProps) => {
+const FilterButton = ({ iconSrc, label }: FilterButtonProps) => {
   const currentPage = useSelector((state: RootState) => state.news.currentPage);
 
   const { openHomeModal, openScrapModal } = useActionCreators();
@@ -46,4 +46,4 @@ const Filter = ({ iconSrc, label }: FilterProps) => {
   );
 };
 
-export default Filter;
+export default FilterButton;

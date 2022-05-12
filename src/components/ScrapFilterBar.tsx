@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Filter from "./Filter";
+import Filter from "./FilterButton";
 import SearchIcon from "../img/searchIcon.png";
 import CalendarIcon from "../img/calendarIcon.png";
 import { useSelector } from "react-redux";

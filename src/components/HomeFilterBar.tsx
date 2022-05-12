@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Filter from "./Filter";
+import FilterButton from "./FilterButton";
 import SearchIcon from "../img/searchIcon.png";
 import CalendarIcon from "../img/calendarIcon.png";
 import HomeFilterModal from "./HomeFilterModal";
@@ -25,9 +25,9 @@ const HomeFilterBar = () => {
   return (
     <>
       <Container>
-        <Filter iconSrc={SearchIcon} label={"전체 헤드라인"} />
-        <Filter iconSrc={CalendarIcon} label={"전체 날짜"} />
-        <Filter label={"전체 국가"} />
+        <FilterButton iconSrc={SearchIcon} label={"전체 헤드라인"} />
+        <FilterButton iconSrc={CalendarIcon} label={"전체 날짜"} />
+        <FilterButton label={"전체 국가"} />
       </Container>
       {isHomeModalOpen && <HomeFilterModal />}
     </>

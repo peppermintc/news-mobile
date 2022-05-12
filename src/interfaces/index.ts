@@ -2,9 +2,9 @@ export type Page = "home" | "scrap";
 
 export interface Filter {
   modalOpen: boolean;
-  currentHeadLine: string;
-  currentDate: string;
-  currentCountry: string;
+  headline: string;
+  date: string;
+  country: string;
 }
 
 export interface Article {

@@ -96,15 +96,15 @@ const initialState: NewsState = {
   currentPage: "home",
   homeFilter: {
     modalOpen: false,
-    currentHeadLine: "",
-    currentDate: "",
-    currentCountry: "",
+    headline: "",
+    date: "",
+    country: "",
   },
   scrapFilter: {
     modalOpen: false,
-    currentHeadLine: "",
-    currentDate: "",
-    currentCountry: "",
+    headline: "",
+    date: "",
+    country: "",
   },
 };
 

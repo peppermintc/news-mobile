@@ -117,20 +117,20 @@ const ApplyButton = styled.button`
 `;
 
 const HomeFilterModal = () => {
-  const [filterValues, setFilterValues] = useState<Filter | undefined>();
+  const [filterValues, setFilterValues] = useState<Filter>();
 
   const homeFilter = useSelector((state: RootState) => state.news.homeFilter);
 
-  const { closeHomeModal } = useActionCreators();
+  const { closeHomeModal, setHomeFilter } = useActionCreators();
 
   const onHeadLineInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFilterValues((prevFilterValues: Filter | undefined) => {
-      const newCurrentHeadLine = e.target.value;
+      const newHeadLine = e.target.value;
       const newFilterValues: Filter = {
         modalOpen: prevFilterValues?.modalOpen || false,
-        currentHeadLine: newCurrentHeadLine,
-        currentDate: prevFilterValues?.currentDate || "",
-        currentCountry: prevFilterValues?.currentCountry || "",
+        headline: newHeadLine,
+        date: prevFilterValues?.date || "",
+        country: prevFilterValues?.country || "",
       };
 
       return newFilterValues;
@@ -138,10 +138,10 @@ const HomeFilterModal = () => {
   };
 
   const onDateChange = (date: Date) => {
-    const newCurrentDate = formatDate(date);
+    const newDate = formatDate(date);
     const newFilterValues: Filter = {
       ...homeFilter,
-      currentDate: newCurrentDate,
+      date: newDate,
     };
 
     setFilterValues(newFilterValues);
@@ -150,8 +150,8 @@ const HomeFilterModal = () => {
   const datePickerCustomInput = () => {
     return (
       <div>
-        {filterValues?.currentDate ? (
-          filterValues?.currentDate
+        {filterValues?.date ? (
+          filterValues?.date
         ) : (
           <span style={{ color: "#c4c4c4" }}>{"날짜를 정해주세요."}</span>
         )}
@@ -160,6 +160,7 @@ const HomeFilterModal = () => {
   };
 
   const onApplyButtonClick = () => {
+    if (filterValues !== undefined) setHomeFilter(filterValues);
     closeHomeModal();
   };
 
