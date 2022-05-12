@@ -1,7 +1,10 @@
 import styled from "styled-components";
+import { Article } from "../interfaces";
 import ArticleListItem from "./ArticleListItem";
 
-const SAMPLE = [1, 2, 3, 4, 5];
+interface ArticleListProps {
+  articles: Article[];
+}
 
 const Container = styled.div`
   padding: 20px 20px 105px 20px;
@@ -10,11 +13,11 @@ const Container = styled.div`
   gap: 8px;
 `;
 
-const ArticleList = () => {
+const ArticleList = ({ articles }: ArticleListProps) => {
   return (
     <Container>
-      {SAMPLE.map((article) => (
-        <ArticleListItem key={article} />
+      {articles.map((article) => (
+        <ArticleListItem key={article._id} article={article} />
       ))}
     </Container>
   );

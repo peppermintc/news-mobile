@@ -2,6 +2,11 @@ import { useState } from "react";
 import styled from "styled-components";
 import StarIconOn from "../img/starIconOn.png";
 import StarIconOff from "../img/starIconOff.png";
+import { Article } from "../interfaces";
+
+interface ArticleListItemProps {
+  article: Article;
+}
 
 const Container = styled.div`
   background-color: #fefefe;
@@ -26,7 +31,14 @@ const Title = styled.div`
   height: 56px;
   font-weight: 600;
   font-size: 18px;
+  line-height: 28px;
   flex: 1;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 const StarIcon = styled.img`
@@ -42,10 +54,20 @@ const StarIcon = styled.img`
 const Source = styled.span`
   font-size: 13px;
   margin-right: 8px;
+
+  width: 130px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Author = styled.span`
   font-size: 13px;
+
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Date = styled.span`
@@ -55,7 +77,7 @@ const Date = styled.span`
   text-align: right;
 `;
 
-const ArticleListItem = () => {
+const ArticleListItem = ({ article }: ArticleListItemProps) => {
   const [isScrap, setIsScrap] = useState<boolean>(false);
 
   const onStarIconClick = () => setIsScrap((prevIsScrap) => !prevIsScrap);
@@ -63,7 +85,7 @@ const ArticleListItem = () => {
   return (
     <Container>
       <SectionTop>
-        <Title>headline.main</Title>
+        <Title>{article.headline.main}</Title>
         <StarIcon
           src={isScrap ? StarIconOn : StarIconOff}
           alt="star"
@@ -71,9 +93,9 @@ const ArticleListItem = () => {
         />
       </SectionTop>
       <SectionBottom>
-        <Source>source</Source>
-        <Author>byline.original</Author>
-        <Date>pub_date</Date>
+        <Source>{article.source}</Source>
+        <Author>{article.byline.original}</Author>
+        <Date>{article.publishDate}</Date>
       </SectionBottom>
     </Container>
   );

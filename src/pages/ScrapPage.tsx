@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import ArticleList from "../components/ArticleList";
 import ScrapFilterBar from "../components/ScrapFilterBar";
 
 const Container = styled.div`
@@ -11,7 +10,7 @@ const ScrapPage = () => {
   return (
     <Container>
       <ScrapFilterBar />
-      <ArticleList />
+      {/* <ArticleList /> */}
     </Container>
   );
 };
