@@ -94,13 +94,14 @@ const Countries = styled.div`
   gap: 10px;
 `;
 
-const CountryButton = styled.div`
+const CountryButton = styled.div<{ isSelected: boolean }>`
   height: 34px;
   padding: 6px 12px 4px;
   border-radius: 30px;
   border: 1px solid #f2f2f2;
   font-size: 14px;
-  color: #6d6d6d;
+  color: ${({ isSelected }) => (isSelected ? "white" : "#6d6d6d")};
+  background-color: ${({ isSelected }) => (isSelected ? "#82B0F4" : "white")};
 `;
 
 const ApplyButton = styled.button`
@@ -142,6 +143,16 @@ const HomeFilterModal = () => {
     const newFilterValues: Filter = {
       ...homeFilter,
       date: newDate,
+    };
+
+    setFilterValues(newFilterValues);
+  };
+
+  const onCountryButtonClick = (country: string) => {
+    const newCountry = country;
+    const newFilterValues: Filter = {
+      ...homeFilter,
+      country: newCountry,
     };
 
     setFilterValues(newFilterValues);
@@ -191,7 +202,13 @@ const HomeFilterModal = () => {
           <Label>국가</Label>
           <Countries>
             {COUNTRIES.map((country) => (
-              <CountryButton key={country}>{country}</CountryButton>
+              <CountryButton
+                key={country}
+                onClick={() => onCountryButtonClick(country)}
+                isSelected={filterValues?.country === country}
+              >
+                {country}
+              </CountryButton>
             ))}
           </Countries>
         </Inputs>
