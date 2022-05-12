@@ -182,6 +182,8 @@ const HomeFilterModal = () => {
               dateFormat="yyyy.MM.dd"
               maxDate={new Date()}
               customInput={datePickerCustomInput()}
+              popperPlacement="bottom-end"
+              showPopperArrow={false}
             />
             <img src={CalendarGray} alt="date" />
           </DateInput>
