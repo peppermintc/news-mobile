@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { RootState } from ".";
-import { Filter, Page } from "../interfaces";
+import { Article, Filter, Page } from "../interfaces";
 
 // Interfaces
 interface Action {
@@ -10,16 +10,36 @@ interface Action {
 
 export interface NewsState {
   currentPage: Page;
+  homeArticles: Article[];
+  scrapArticles: Article[];
   homeFilter: Filter;
   scrapFilter: Filter;
 }
 
 // Action Types
+const SET_HOME_ARTICLES = "SET_HOME_ARTICLES";
+const SET_SCRAP_ARTICLES = "SET_SCRAP_ARTICLES";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_HOME_FILTER = "SET_HOME_FILTER";
 const SET_SCRAP_FILTER = "SET_SCRAP_FILTER";
 
 // Action Creators
+export const setHomeArticles =
+  (newArticles: Article[]) => (dispatch: Dispatch) => {
+    dispatch({
+      type: SET_HOME_ARTICLES,
+      payload: newArticles,
+    });
+  };
+
+export const setScrapArticles =
+  (newArticles: Article[]) => (dispatch: Dispatch) => {
+    dispatch({
+      type: SET_SCRAP_ARTICLES,
+      payload: newArticles,
+    });
+  };
+
 export const openHomeModal =
   () => (dispatch: Dispatch, getState: () => RootState) => {
     const { homeFilter } = getState().news;
@@ -94,6 +114,8 @@ export const setScrapFilter =
 // Initial State
 const initialState: NewsState = {
   currentPage: "home",
+  homeArticles: [],
+  scrapArticles: [],
   homeFilter: {
     modalOpen: false,
     headline: "",
@@ -115,6 +137,16 @@ const newsReducer = (state: NewsState = initialState, action: Action) => {
       return {
         ...state,
         currentPage: action.payload,
+      };
+    case SET_HOME_ARTICLES:
+      return {
+        ...state,
+        homeArticles: action.payload,
+      };
+    case SET_SCRAP_ARTICLES:
+      return {
+        ...state,
+        scrapArticles: action.payload,
       };
     case SET_HOME_FILTER:
       return {

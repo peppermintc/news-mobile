@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { axiosGetArticles } from "../api";
 import ArticleList from "../components/ArticleList";
 import HomeFilterBar from "../components/HomeFilterBar";
-import { Article } from "../interfaces";
+import useActionCreators from "../hooks/useActionCreators";
+import { RootState } from "../modules";
 
 const Container = styled.div`
   width: 100%;
@@ -12,16 +14,17 @@ const Container = styled.div`
 `;
 
 const HomePage = () => {
-  const [articles, setArticles] = useState<Article[]>([]);
+  const { homeArticles } = useSelector((state: RootState) => state.news);
+  const { setHomeArticles } = useActionCreators();
 
   useEffect(() => {
-    axiosGetArticles().then(({ response }) => setArticles(response.docs));
-  }, []);
+    axiosGetArticles().then(({ response }) => setHomeArticles(response.docs));
+  }, [setHomeArticles]);
 
   return (
     <Container>
       <HomeFilterBar />
-      <ArticleList articles={articles} />
+      <ArticleList articles={homeArticles} />
     </Container>
   );
 };
