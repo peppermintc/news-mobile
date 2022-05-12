@@ -1,4 +1,6 @@
+import { useState } from "react";
 import styled from "styled-components";
+import StarIconOn from "../img/starIconOn.png";
 import StarIconOff from "../img/starIconOff.png";
 
 const Container = styled.div`
@@ -34,6 +36,7 @@ const StarIcon = styled.img`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 const Source = styled.span`
@@ -53,16 +56,24 @@ const Date = styled.span`
 `;
 
 const ArticleListItem = () => {
+  const [isScrap, setIsScrap] = useState<boolean>(false);
+
+  const onStarIconClick = () => setIsScrap((prevIsScrap) => !prevIsScrap);
+
   return (
     <Container>
       <SectionTop>
-        <Title>국방붐ㄴㅇㅁㄴ</Title>
-        <StarIcon src={StarIconOff} alt="star" />
+        <Title>headline.main</Title>
+        <StarIcon
+          src={isScrap ? StarIconOn : StarIconOff}
+          alt="star"
+          onClick={onStarIconClick}
+        />
       </SectionTop>
       <SectionBottom>
-        <Source>조선일보</Source>
-        <Author>김정화 기자</Author>
-        <Date>2021.3.15. (목)</Date>
+        <Source>source</Source>
+        <Author>byline.original</Author>
+        <Date>pub_date</Date>
       </SectionBottom>
     </Container>
   );
