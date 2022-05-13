@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import useActionCreators from "../hooks/useActionCreators";
@@ -118,6 +118,8 @@ const ApplyButton = styled.button`
 `;
 
 const HomeFilterModal = () => {
+  const headlineInputRef = useRef<HTMLInputElement>(null);
+
   const [filterValues, setFilterValues] = useState<Filter>();
 
   const homeFilter = useSelector((state: RootState) => state.news.homeFilter);
@@ -126,12 +128,17 @@ const HomeFilterModal = () => {
 
   useEffect(() => {
     setFilterValues(homeFilter);
-  }, []);
+
+    if (headlineInputRef.current === null) return;
+    headlineInputRef.current.value = homeFilter.headline;
+  }, [homeFilter]);
 
   const onHeadLineInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (filterValues === undefined) return;
+
     const newHeadLine = e.target.value;
     const newFilterValues: Filter = {
-      ...homeFilter,
+      ...filterValues,
       headline: newHeadLine,
     };
 
@@ -139,9 +146,11 @@ const HomeFilterModal = () => {
   };
 
   const onDateChange = (date: Date) => {
+    if (filterValues === undefined) return;
+
     const newDate = formatDate(date);
     const newFilterValues: Filter = {
-      ...homeFilter,
+      ...filterValues,
       date: newDate,
     };
 
@@ -189,6 +198,7 @@ const HomeFilterModal = () => {
         <Inputs>
           <Label>헤드라인</Label>
           <HeadLineInput
+            ref={headlineInputRef}
             placeholder={"검색할 헤드라인을 입력해주세요."}
             onChange={onHeadLineInputChange}
           />
