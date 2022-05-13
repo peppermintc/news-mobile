@@ -19,3 +19,7 @@ export const formatDate = (date: Date): string => {
   const newCurrentDate = `${year}.${month}.${day}`;
   return newCurrentDate;
 };
+
+export const formatPubDate = (date: string): string => {
+  return date.split("T")[0].replaceAll("-", ".");
+};

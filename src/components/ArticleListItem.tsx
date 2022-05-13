@@ -3,6 +3,7 @@ import styled from "styled-components";
 import StarIconOn from "../img/starIconOn.png";
 import StarIconOff from "../img/starIconOff.png";
 import { Article } from "../interfaces";
+import { formatPubDate } from "../utils";
 
 interface ArticleListItemProps {
   article: Article;
@@ -131,7 +132,7 @@ const ArticleListItem = ({ article }: ArticleListItemProps) => {
       <SectionBottom>
         <Source>{article.source}</Source>
         <Author>{article.byline.original}</Author>
-        <Date>{article.publishDate}</Date>
+        <Date>{formatPubDate(article.pub_date)}</Date>
       </SectionBottom>
     </Container>
   );

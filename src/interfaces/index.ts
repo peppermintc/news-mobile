@@ -13,6 +13,6 @@ export interface Article {
   source: string;
   byline: { original: string };
   author: string;
-  publishDate: string;
+  pub_date: string;
   isScrapped: boolean;
 }
