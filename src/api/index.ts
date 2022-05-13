@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Filter } from "../interfaces";
 
-export const axiosGetArticles = async (filter: Filter) => {
+export const axiosGetArticles = async (filter: Filter, page: number = 0) => {
   const makeHeadlineFQ = () => {
     if (filter.headline === "") return "";
     else return ` AND headline:("${filter.headline}")`;
@@ -17,15 +17,16 @@ export const axiosGetArticles = async (filter: Filter) => {
     else {
       let result = ` AND section_name:("World")`;
       filter.country.forEach((country) => {
-        if (country === "대한민국") result += `AND glocations:("South Korea")`;
-        else if (country === "중국") result += `AND glocations:("China")`;
-        else if (country === "일본") result += `AND glocations:("Japan")`;
+        if (country === "대한민국") result += ` AND glocations:("South Korea")`;
+        else if (country === "중국") result += ` AND glocations:("China")`;
+        else if (country === "일본") result += ` AND glocations:("Japan")`;
         else if (country === "미국")
-          result += `AND glocations:("United States")`;
-        else if (country === "북한") result += `AND glocations:("North Korea")`;
-        else if (country === "러시아") result += `AND glocations:("Russia")`;
-        else if (country === "프랑스") result += `AND glocations:("France")`;
-        else if (country === "영국") result += `AND glocations:("England")`;
+          result += ` AND glocations:("United States")`;
+        else if (country === "북한")
+          result += ` AND glocations:("North Korea")`;
+        else if (country === "러시아") result += ` AND glocations:("Russia")`;
+        else if (country === "프랑스") result += ` AND glocations:("France")`;
+        else if (country === "영국") result += ` AND glocations:("England")`;
       });
       return result;
     }
@@ -43,6 +44,7 @@ export const axiosGetArticles = async (filter: Filter) => {
       params: {
         "api-key": "9HjHkzg0V8sD7Eg9sIdTUu9stiqsL5RU",
         fq: fq,
+        page: page,
       },
     })
     .then((response) => response.data)
