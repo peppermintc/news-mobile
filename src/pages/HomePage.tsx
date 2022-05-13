@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { axiosGetArticles } from "../api";
@@ -14,6 +14,8 @@ const Container = styled.div`
 `;
 
 const HomePage = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const { homeArticles, homeFilter } = useSelector(
     (state: RootState) => state.news
   );
@@ -25,8 +27,17 @@ const HomePage = () => {
     );
   }, [setHomeArticles, homeFilter]);
 
+  const onContainerScroll = () => {
+    if (containerRef.current === null) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    if (scrollHeight - scrollTop <= clientHeight) {
+      console.log("fetch next page / append articles");
+    }
+  };
+
   return (
-    <Container>
+    <Container ref={containerRef} onScroll={onContainerScroll}>
       <HomeFilterBar />
       <ArticleList articles={homeArticles} />
     </Container>
