@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import styled from "styled-components";
 import StarIconOn from "../img/starIconOn.png";
 import StarIconOff from "../img/starIconOff.png";
@@ -55,7 +55,7 @@ const Source = styled.span`
   font-size: 13px;
   margin-right: 8px;
 
-  width: 130px;
+  width: 100px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -64,7 +64,7 @@ const Source = styled.span`
 const Author = styled.span`
   font-size: 13px;
 
-  width: 150px;
+  width: 100px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -80,7 +80,43 @@ const Date = styled.span`
 const ArticleListItem = ({ article }: ArticleListItemProps) => {
   const [isScrap, setIsScrap] = useState<boolean>(false);
 
-  const onStarIconClick = () => setIsScrap((prevIsScrap) => !prevIsScrap);
+  useLayoutEffect(() => {
+    const prevScrappedArticles: Article[] = [];
+    const string = localStorage.getItem("scrappedArticles");
+    if (string !== null) prevScrappedArticles.push(...JSON.parse(string));
+    if (prevScrappedArticles.find((a) => a._id === article._id))
+      setIsScrap(true);
+  }, [article._id]);
+
+  const onStarIconClick = () => {
+    if (isScrap === false) {
+      setIsScrap(true);
+
+      const newScrappedArticles: Article[] = [];
+      const string = localStorage.getItem("scrappedArticles");
+      if (string === null) newScrappedArticles.push(article);
+      else newScrappedArticles.push(...JSON.parse(string), article);
+
+      localStorage.setItem(
+        "scrappedArticles",
+        JSON.stringify(newScrappedArticles)
+      );
+    } else {
+      setIsScrap(false);
+
+      const string = localStorage.getItem("scrappedArticles") as string;
+      const prevScrappedArticles: Article[] = JSON.parse(string);
+
+      const newScrappedArticles: Article[] = prevScrappedArticles.filter(
+        (a) => a._id !== article._id
+      );
+
+      localStorage.setItem(
+        "scrappedArticles",
+        JSON.stringify(newScrappedArticles)
+      );
+    }
+  };
 
   return (
     <Container>
