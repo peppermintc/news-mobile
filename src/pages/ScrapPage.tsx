@@ -43,7 +43,7 @@ const ScrapPage = () => {
   useEffect(() => {
     if (scrapPageStateLoaded === false) return;
     if (scrappedArticles === []) return;
-    console.log("run");
+
     // newScrappedArticles
     let newScrappedArticles = [...scrappedArticles];
 
