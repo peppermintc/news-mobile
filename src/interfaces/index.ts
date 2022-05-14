@@ -15,4 +15,5 @@ export interface Article {
   author: string;
   pub_date: string;
   isScrapped: boolean;
+  web_url: string;
 }

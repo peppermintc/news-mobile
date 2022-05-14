@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import styled from "styled-components";
 import StarIconOn from "../img/starIconOn.png";
 import StarIconOff from "../img/starIconOff.png";
@@ -89,7 +89,9 @@ const ArticleListItem = ({ article }: ArticleListItemProps) => {
       setIsScrap(true);
   }, [article._id]);
 
-  const onStarIconClick = () => {
+  const onStarIconClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
     if (isScrap === false) {
       setIsScrap(true);
 
@@ -119,8 +121,10 @@ const ArticleListItem = ({ article }: ArticleListItemProps) => {
     }
   };
 
+  const onContainerClick = (webUrl: string) => (window.location.href = webUrl);
+
   return (
-    <Container>
+    <Container onClick={() => onContainerClick(article.web_url)}>
       <SectionTop>
         <Title>{article.headline.main}</Title>
         <StarIcon
