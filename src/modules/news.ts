@@ -14,6 +14,8 @@ export interface NewsState {
   scrapArticles: Article[];
   homeFilter: Filter;
   scrapFilter: Filter;
+  isToastMessageOn: boolean;
+  toastMessage: string;
 }
 
 // Action Types
@@ -22,6 +24,8 @@ const SET_SCRAP_ARTICLES = "SET_SCRAP_ARTICLES";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_HOME_FILTER = "SET_HOME_FILTER";
 const SET_SCRAP_FILTER = "SET_SCRAP_FILTER";
+const SET_IS_TOAST_MESSAGE_ON = "SET_IS_TOAST_MESSAGE_ON";
+const SET_TOAST_MESSAGE = "SET_TOAST_MESSAGE";
 
 // Action Creators
 export const setHomeArticles =
@@ -111,6 +115,40 @@ export const setScrapFilter =
     });
   };
 
+export const addScrap = (article: Article) => (dispatch: Dispatch) => {
+  dispatch({ type: SET_TOAST_MESSAGE, payload: "스크랩 추가되었습니다" });
+  dispatch({ type: SET_IS_TOAST_MESSAGE_ON, payload: true });
+  setTimeout(
+    () => dispatch({ type: SET_IS_TOAST_MESSAGE_ON, payload: false }),
+    800
+  );
+
+  const newScrappedArticles: Article[] = [];
+  const string = localStorage.getItem("scrappedArticles");
+  if (string === null) newScrappedArticles.push(article);
+  else newScrappedArticles.push(...JSON.parse(string), article);
+
+  localStorage.setItem("scrappedArticles", JSON.stringify(newScrappedArticles));
+};
+
+export const deleteScrap = (article: Article) => (dispatch: Dispatch) => {
+  dispatch({ type: SET_TOAST_MESSAGE, payload: "스크랩 삭제되었습니다" });
+  dispatch({ type: SET_IS_TOAST_MESSAGE_ON, payload: true });
+  setTimeout(
+    () => dispatch({ type: SET_IS_TOAST_MESSAGE_ON, payload: false }),
+    800
+  );
+
+  const string = localStorage.getItem("scrappedArticles") as string;
+  const prevScrappedArticles: Article[] = JSON.parse(string);
+
+  const newScrappedArticles: Article[] = prevScrappedArticles.filter(
+    (a) => a._id !== article._id
+  );
+
+  localStorage.setItem("scrappedArticles", JSON.stringify(newScrappedArticles));
+};
+
 // Initial State
 const initialState: NewsState = {
   currentPage: "home",
@@ -128,6 +166,8 @@ const initialState: NewsState = {
     date: "",
     country: [],
   },
+  isToastMessageOn: false,
+  toastMessage: "",
 };
 
 // Reducer
@@ -157,6 +197,16 @@ const newsReducer = (state: NewsState = initialState, action: Action) => {
       return {
         ...state,
         scrapFilter: action.payload,
+      };
+    case SET_IS_TOAST_MESSAGE_ON:
+      return {
+        ...state,
+        isToastMessageOn: action.payload,
+      };
+    case SET_TOAST_MESSAGE:
+      return {
+        ...state,
+        toastMessage: action.payload,
       };
     default:
       return state;

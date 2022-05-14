@@ -15,6 +15,8 @@ const useActionCreators = () => {
     setHomeFilter,
     setHomeArticles,
     setScrapArticles,
+    addScrap,
+    deleteScrap,
   } = useMemo(
     () => bindActionCreators(communityActionCreators, dispatch),
     [dispatch]
@@ -29,6 +31,8 @@ const useActionCreators = () => {
     setHomeFilter,
     setHomeArticles,
     setScrapArticles,
+    addScrap,
+    deleteScrap,
   };
 };
 

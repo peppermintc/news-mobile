@@ -4,6 +4,7 @@ import StarIconOn from "../img/starIconOn.png";
 import StarIconOff from "../img/starIconOff.png";
 import { Article } from "../interfaces";
 import { formatPubDate } from "../utils";
+import useActionCreators from "../hooks/useActionCreators";
 
 interface ArticleListItemProps {
   article: Article;
@@ -81,6 +82,8 @@ const Date = styled.span`
 const ArticleListItem = ({ article }: ArticleListItemProps) => {
   const [isScrap, setIsScrap] = useState<boolean>(false);
 
+  const { addScrap, deleteScrap } = useActionCreators();
+
   useLayoutEffect(() => {
     const prevScrappedArticles: Article[] = [];
     const string = localStorage.getItem("scrappedArticles");
@@ -94,30 +97,10 @@ const ArticleListItem = ({ article }: ArticleListItemProps) => {
 
     if (isScrap === false) {
       setIsScrap(true);
-
-      const newScrappedArticles: Article[] = [];
-      const string = localStorage.getItem("scrappedArticles");
-      if (string === null) newScrappedArticles.push(article);
-      else newScrappedArticles.push(...JSON.parse(string), article);
-
-      localStorage.setItem(
-        "scrappedArticles",
-        JSON.stringify(newScrappedArticles)
-      );
+      addScrap(article);
     } else {
       setIsScrap(false);
-
-      const string = localStorage.getItem("scrappedArticles") as string;
-      const prevScrappedArticles: Article[] = JSON.parse(string);
-
-      const newScrappedArticles: Article[] = prevScrappedArticles.filter(
-        (a) => a._id !== article._id
-      );
-
-      localStorage.setItem(
-        "scrappedArticles",
-        JSON.stringify(newScrappedArticles)
-      );
+      deleteScrap(article);
     }
   };
 

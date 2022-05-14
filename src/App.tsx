@@ -3,6 +3,9 @@ import HomePage from "./pages/HomePage";
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
 import ScrapPage from "./pages/ScrapPage";
+import ToastMessage from "./components/ToastMessage";
+import { useSelector } from "react-redux";
+import { RootState } from "./modules";
 
 const Container = styled.div`
   width: 100vw;
@@ -13,6 +16,8 @@ const Container = styled.div`
 `;
 
 const App = () => {
+  const { isToastMessageOn } = useSelector((state: RootState) => state.news);
+
   return (
     <Container>
       <Routes>
@@ -20,6 +25,7 @@ const App = () => {
         <Route path="/scrap" element={<ScrapPage />} />
       </Routes>
       <BottomBar />
+      {isToastMessageOn && <ToastMessage />}
     </Container>
   );
 };
