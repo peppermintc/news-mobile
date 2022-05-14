@@ -11,19 +11,19 @@ interface Action {
 export interface NewsState {
   currentPage: Page;
   homeArticles: Article[];
-  scrapArticles: Article[];
   homeFilter: Filter;
   scrapFilter: Filter;
+  scrapPageStateLoaded: boolean;
   isToastMessageOn: boolean;
   toastMessage: string;
 }
 
 // Action Types
 const SET_HOME_ARTICLES = "SET_HOME_ARTICLES";
-const SET_SCRAP_ARTICLES = "SET_SCRAP_ARTICLES";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_HOME_FILTER = "SET_HOME_FILTER";
 const SET_SCRAP_FILTER = "SET_SCRAP_FILTER";
+const SET_SCRAP_PAGE_STATE_LOADED = "SET_SCRAP_PAGE_STATE_LOADED";
 const SET_IS_TOAST_MESSAGE_ON = "SET_IS_TOAST_MESSAGE_ON";
 const SET_TOAST_MESSAGE = "SET_TOAST_MESSAGE";
 
@@ -32,14 +32,6 @@ export const setHomeArticles =
   (newArticles: Article[]) => (dispatch: Dispatch) => {
     dispatch({
       type: SET_HOME_ARTICLES,
-      payload: newArticles,
-    });
-  };
-
-export const setScrapArticles =
-  (newArticles: Article[]) => (dispatch: Dispatch) => {
-    dispatch({
-      type: SET_SCRAP_ARTICLES,
       payload: newArticles,
     });
   };
@@ -149,11 +141,15 @@ export const deleteScrap = (article: Article) => (dispatch: Dispatch) => {
   localStorage.setItem("scrappedArticles", JSON.stringify(newScrappedArticles));
 };
 
+export const setScrapPageStateLoaded =
+  (isLoaded: boolean) => (dispatch: Dispatch) => {
+    dispatch({ type: SET_SCRAP_PAGE_STATE_LOADED, payload: isLoaded });
+  };
+
 // Initial State
 const initialState: NewsState = {
   currentPage: "home",
   homeArticles: [],
-  scrapArticles: [],
   homeFilter: {
     modalOpen: false,
     headline: "",
@@ -166,6 +162,7 @@ const initialState: NewsState = {
     date: "",
     country: [],
   },
+  scrapPageStateLoaded: false,
   isToastMessageOn: false,
   toastMessage: "",
 };
@@ -183,11 +180,6 @@ const newsReducer = (state: NewsState = initialState, action: Action) => {
         ...state,
         homeArticles: action.payload,
       };
-    case SET_SCRAP_ARTICLES:
-      return {
-        ...state,
-        scrapArticles: action.payload,
-      };
     case SET_HOME_FILTER:
       return {
         ...state,
@@ -197,6 +189,11 @@ const newsReducer = (state: NewsState = initialState, action: Action) => {
       return {
         ...state,
         scrapFilter: action.payload,
+      };
+    case SET_SCRAP_PAGE_STATE_LOADED:
+      return {
+        ...state,
+        scrapPageStateLoaded: action.payload,
       };
     case SET_IS_TOAST_MESSAGE_ON:
       return {

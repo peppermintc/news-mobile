@@ -16,4 +16,5 @@ export interface Article {
   pub_date: string;
   isScrapped: boolean;
   web_url: string;
+  keywords: { name: string; value: string }[];
 }

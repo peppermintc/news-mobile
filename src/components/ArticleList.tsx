@@ -16,8 +16,8 @@ const Container = styled.div`
 const ArticleList = ({ articles }: ArticleListProps) => {
   return (
     <Container>
-      {articles.map((article) => (
-        <ArticleListItem key={article._id} article={article} />
+      {articles.map((article, index) => (
+        <ArticleListItem key={`${index}/${article._id}`} article={article} />
       ))}
     </Container>
   );
