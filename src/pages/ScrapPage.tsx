@@ -1,6 +1,7 @@
 import { useLayoutEffect, useState } from "react";
 import styled from "styled-components";
 import ArticleList from "../components/ArticleList";
+import NoScrapData from "../components/NoScrapData";
 import ScrapFilterBar from "../components/ScrapFilterBar";
 import { Article } from "../interfaces";
 
@@ -24,8 +25,13 @@ const ScrapPage = () => {
 
   return (
     <Container>
-      <ScrapFilterBar />
-      <ArticleList articles={scrappedArticles} />
+      {scrappedArticles.length === 0 && <NoScrapData />}
+      {scrappedArticles.length > 0 && (
+        <>
+          <ScrapFilterBar />
+          <ArticleList articles={scrappedArticles} />
+        </>
+      )}
     </Container>
   );
 };
