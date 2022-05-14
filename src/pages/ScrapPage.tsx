@@ -1,16 +1,31 @@
+import { useLayoutEffect, useState } from "react";
 import styled from "styled-components";
+import ArticleList from "../components/ArticleList";
 import ScrapFilterBar from "../components/ScrapFilterBar";
+import { Article } from "../interfaces";
 
 const Container = styled.div`
   width: 100%;
   flex: 1;
+  overflow: scroll;
 `;
 
 const ScrapPage = () => {
+  const [scrappedArticles, setScrappedArticles] = useState<Article[]>([]);
+
+  useLayoutEffect(() => {
+    const string = localStorage.getItem("scrappedArticles");
+
+    if (string === null) return;
+
+    const array = JSON.parse(string);
+    setScrappedArticles(array);
+  }, []);
+
   return (
     <Container>
       <ScrapFilterBar />
-      {/* <ArticleList /> */}
+      <ArticleList articles={scrappedArticles} />
     </Container>
   );
 };
