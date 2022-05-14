@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import useActionCreators from "../hooks/useActionCreators";
 import FileIcon from "../img/fileIcon.png";
 
 const Container = styled.div`
@@ -33,7 +34,12 @@ const Button = styled.button`
 
 const NoScrapData = () => {
   const navigate = useNavigate();
-  const onButtonClick = () => navigate("/");
+  const { setCurrentPage } = useActionCreators();
+
+  const onButtonClick = () => {
+    navigate("/");
+    setCurrentPage("home");
+  };
 
   return (
     <Container>
