@@ -24,7 +24,7 @@ const ScrapPage = () => {
     (state: RootState) => state.news.scrapPageStateLoaded
   );
 
-  const { setScrapPageStateLoaded } = useActionCreators();
+  const { setScrapPageStateLoaded, setScrapFilter } = useActionCreators();
 
   useLayoutEffect(() => {
     const string = localStorage.getItem("scrappedArticles");
@@ -85,6 +85,12 @@ const ScrapPage = () => {
   useEffect(() => {
     return () => {
       setScrapPageStateLoaded(false);
+      setScrapFilter({
+        modalOpen: false,
+        headline: "",
+        date: "",
+        country: [],
+      });
     };
   }, []);
 
