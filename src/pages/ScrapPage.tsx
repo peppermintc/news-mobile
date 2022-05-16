@@ -86,7 +86,6 @@ const ScrapPage = () => {
     return () => {
       setScrapPageStateLoaded(false);
       setScrapFilter({
-        modalOpen: false,
         headline: "",
         date: "",
         country: [],

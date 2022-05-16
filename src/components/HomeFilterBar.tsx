@@ -21,7 +21,7 @@ const Container = styled.div`
 
 const HomeFilterBar = () => {
   const isHomeModalOpen = useSelector(
-    (state: RootState) => state.news.homeFilter.modalOpen
+    (state: RootState) => state.news.homeModalOpen
   );
   const homeFilter = useSelector((state: RootState) => state.news.homeFilter);
 

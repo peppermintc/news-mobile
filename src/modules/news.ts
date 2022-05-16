@@ -1,5 +1,4 @@
 import { Dispatch } from "redux";
-import { RootState } from ".";
 import { Article, Filter, Page } from "../interfaces";
 
 // Interfaces
@@ -13,6 +12,8 @@ export interface NewsState {
   homeArticles: Article[];
   homeFilter: Filter;
   scrapFilter: Filter;
+  homeModalOpen: boolean;
+  scrapModalOpen: boolean;
   scrapPageStateLoaded: boolean;
   isToastMessageOn: boolean;
   toastMessage: string;
@@ -26,6 +27,8 @@ const SET_SCRAP_FILTER = "SET_SCRAP_FILTER";
 const SET_SCRAP_PAGE_STATE_LOADED = "SET_SCRAP_PAGE_STATE_LOADED";
 const SET_IS_TOAST_MESSAGE_ON = "SET_IS_TOAST_MESSAGE_ON";
 const SET_TOAST_MESSAGE = "SET_TOAST_MESSAGE";
+const SET_HOME_MODAL_OPEN = "SET_HOME_MODAL_OPEN";
+const SET_SCRAP_MODAL_OPEN = "SET_SCRAP_MODAL_OPEN";
 
 // Action Creators
 export const setHomeArticles =
@@ -33,54 +36,6 @@ export const setHomeArticles =
     dispatch({
       type: SET_HOME_ARTICLES,
       payload: newArticles,
-    });
-  };
-
-export const openHomeModal =
-  () => (dispatch: Dispatch, getState: () => RootState) => {
-    const { homeFilter } = getState().news;
-    dispatch({
-      type: SET_HOME_FILTER,
-      payload: {
-        ...homeFilter,
-        modalOpen: true,
-      },
-    });
-  };
-
-export const closeHomeModal =
-  () => (dispatch: Dispatch, getState: () => RootState) => {
-    const { homeFilter } = getState().news;
-    dispatch({
-      type: SET_HOME_FILTER,
-      payload: {
-        ...homeFilter,
-        modalOpen: false,
-      },
-    });
-  };
-
-export const openScrapModal =
-  () => (dispatch: Dispatch, getState: () => RootState) => {
-    const { scrapFilter } = getState().news;
-    dispatch({
-      type: SET_SCRAP_FILTER,
-      payload: {
-        ...scrapFilter,
-        modalOpen: true,
-      },
-    });
-  };
-
-export const closeScrapModal =
-  () => (dispatch: Dispatch, getState: () => RootState) => {
-    const { scrapFilter } = getState().news;
-    dispatch({
-      type: SET_SCRAP_FILTER,
-      payload: {
-        ...scrapFilter,
-        modalOpen: false,
-      },
     });
   };
 
@@ -146,22 +101,30 @@ export const setScrapPageStateLoaded =
     dispatch({ type: SET_SCRAP_PAGE_STATE_LOADED, payload: isLoaded });
   };
 
+export const setModalOpen =
+  (page: Page, openState: boolean) => (dispatch: Dispatch) => {
+    if (page === "home")
+      dispatch({ type: SET_HOME_MODAL_OPEN, payload: openState });
+    else if (page === "scrap")
+      dispatch({ type: SET_SCRAP_MODAL_OPEN, payload: openState });
+  };
+
 // Initial State
 const initialState: NewsState = {
   currentPage: "home",
   homeArticles: [],
   homeFilter: {
-    modalOpen: false,
     headline: "",
     date: "",
     country: [],
   },
   scrapFilter: {
-    modalOpen: false,
     headline: "",
     date: "",
     country: [],
   },
+  homeModalOpen: false,
+  scrapModalOpen: false,
   scrapPageStateLoaded: false,
   isToastMessageOn: false,
   toastMessage: "",
@@ -189,6 +152,16 @@ const newsReducer = (state: NewsState = initialState, action: Action) => {
       return {
         ...state,
         scrapFilter: action.payload,
+      };
+    case SET_HOME_MODAL_OPEN:
+      return {
+        ...state,
+        homeModalOpen: action.payload,
+      };
+    case SET_SCRAP_MODAL_OPEN:
+      return {
+        ...state,
+        scrapModalOpen: action.payload,
       };
     case SET_SCRAP_PAGE_STATE_LOADED:
       return {

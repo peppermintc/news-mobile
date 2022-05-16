@@ -21,7 +21,7 @@ const Container = styled.div`
 
 const ScrapFilterBar = () => {
   const isScrapModalOpen = useSelector(
-    (state: RootState) => state.news.scrapFilter.modalOpen
+    (state: RootState) => state.news.scrapModalOpen
   );
   const scrapFilter = useSelector((state: RootState) => state.news.scrapFilter);
 

@@ -33,12 +33,9 @@ const Icon = styled.img`
 const FilterButton = ({ iconSrc, label, isSelected }: FilterButtonProps) => {
   const currentPage = useSelector((state: RootState) => state.news.currentPage);
 
-  const { openHomeModal, openScrapModal } = useActionCreators();
+  const { setModalOpen } = useActionCreators();
 
-  const onFilterClick = () => {
-    if (currentPage === "home") return openHomeModal();
-    if (currentPage === "scrap") return openScrapModal();
-  };
+  const onFilterClick = () => setModalOpen(currentPage, true);
 
   return (
     <Container onClick={onFilterClick} isSelected={isSelected}>

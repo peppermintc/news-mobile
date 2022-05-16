@@ -1,7 +1,6 @@
 export type Page = "home" | "scrap";
 
 export interface Filter {
-  modalOpen: boolean;
   headline: string;
   date: string;
   country: string[];

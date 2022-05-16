@@ -8,16 +8,13 @@ const useActionCreators = () => {
 
   const {
     setCurrentPage,
-    openHomeModal,
-    closeHomeModal,
-    openScrapModal,
-    closeScrapModal,
     setHomeFilter,
     setHomeArticles,
     setScrapFilter,
     addScrap,
     deleteScrap,
     setScrapPageStateLoaded,
+    setModalOpen,
   } = useMemo(
     () => bindActionCreators(communityActionCreators, dispatch),
     [dispatch]
@@ -25,16 +22,13 @@ const useActionCreators = () => {
 
   return {
     setCurrentPage,
-    openHomeModal,
-    closeHomeModal,
-    openScrapModal,
-    closeScrapModal,
     setHomeFilter,
     setHomeArticles,
     setScrapFilter,
     addScrap,
     deleteScrap,
     setScrapPageStateLoaded,
+    setModalOpen,
   };
 };
 

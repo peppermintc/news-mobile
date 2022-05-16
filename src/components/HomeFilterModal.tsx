@@ -125,7 +125,7 @@ const HomeFilterModal = () => {
 
   const homeFilter = useSelector((state: RootState) => state.news.homeFilter);
 
-  const { closeHomeModal, setHomeFilter } = useActionCreators();
+  const { setModalOpen, setHomeFilter } = useActionCreators();
 
   useEffect(() => {
     setFilterValues(homeFilter);
@@ -190,7 +190,7 @@ const HomeFilterModal = () => {
 
   const onApplyButtonClick = () => {
     if (filterValues !== undefined) setHomeFilter(filterValues);
-    closeHomeModal();
+    setModalOpen("home", false);
   };
 
   return (

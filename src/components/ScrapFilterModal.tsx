@@ -125,7 +125,7 @@ const ScrapFilterModal = () => {
 
   const scrapFilter = useSelector((state: RootState) => state.news.scrapFilter);
 
-  const { closeScrapModal, setScrapFilter } = useActionCreators();
+  const { setModalOpen, setScrapFilter } = useActionCreators();
 
   useEffect(() => {
     setFilterValues(scrapFilter);
@@ -190,7 +190,7 @@ const ScrapFilterModal = () => {
 
   const onApplyButtonClick = () => {
     if (filterValues !== undefined) setScrapFilter(filterValues);
-    closeScrapModal();
+    setModalOpen("scrap", false);
   };
 
   return (
