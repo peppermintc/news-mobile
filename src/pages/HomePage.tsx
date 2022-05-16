@@ -27,7 +27,7 @@ const HomePage = () => {
     (state: RootState) => state.news.homeArticles
   );
 
-  const { setHomeArticles } = useActionCreators();
+  const { setHomeArticles, clearHomeArticles } = useActionCreators();
 
   useEffect(() => {
     setIsLoadingOn(true);
@@ -44,7 +44,7 @@ const HomePage = () => {
 
   useEffect(() => {
     setPage(0);
-    setHomeArticles([]);
+    clearHomeArticles();
   }, [homeFilter]);
 
   const onContainerScroll = () => {

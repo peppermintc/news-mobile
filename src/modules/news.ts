@@ -21,6 +21,7 @@ export interface NewsState {
 
 // Action Types
 const SET_HOME_ARTICLES = "SET_HOME_ARTICLES";
+const CLEAR_HOME_ARTICLES = "CLEAR_HOME_ARTICLES";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_HOME_FILTER = "SET_HOME_FILTER";
 const SET_SCRAP_FILTER = "SET_SCRAP_FILTER";
@@ -38,6 +39,13 @@ export const setHomeArticles =
       payload: newArticles,
     });
   };
+
+export const clearHomeArticles = () => (dispatch: Dispatch) => {
+  dispatch({
+    type: CLEAR_HOME_ARTICLES,
+    payload: [],
+  });
+};
 
 export const setCurrentPage = (newPage: Page) => async (dispatch: Dispatch) => {
   dispatch({
@@ -139,6 +147,11 @@ const newsReducer = (state: NewsState = initialState, action: Action) => {
         currentPage: action.payload,
       };
     case SET_HOME_ARTICLES:
+      return {
+        ...state,
+        homeArticles: action.payload,
+      };
+    case CLEAR_HOME_ARTICLES:
       return {
         ...state,
         homeArticles: action.payload,
