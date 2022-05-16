@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { axiosGetArticles } from "../api";
 import ArticleList from "../components/ArticleList";
 import HomeFilterBar from "../components/HomeFilterBar";
+import LoadingSpinner from "../components/LoadingSpinner";
 import useActionCreators from "../hooks/useActionCreators";
 import { Article } from "../interfaces";
 import { RootState } from "../modules";
@@ -19,6 +20,7 @@ const HomePage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [page, setPage] = useState<number>(0);
+  const [isLoadingOn, setIsLoadingOn] = useState<boolean>(false);
 
   const homeFilter = useSelector((state: RootState) => state.news.homeFilter);
   const homeArticles = useSelector(
@@ -28,12 +30,16 @@ const HomePage = () => {
   const { setHomeArticles } = useActionCreators();
 
   useEffect(() => {
-    axiosGetArticles(homeFilter, page).then(({ response }) => {
-      const newArticles: Article[] = response.docs;
+    setIsLoadingOn(true);
 
-      if (homeArticles.length === 0) setHomeArticles(newArticles);
-      else setHomeArticles([...homeArticles, ...newArticles]);
-    });
+    axiosGetArticles(homeFilter, page)
+      .then(({ response }) => {
+        const newArticles: Article[] = response.docs;
+
+        if (homeArticles.length === 0) setHomeArticles(newArticles);
+        else setHomeArticles([...homeArticles, ...newArticles]);
+      })
+      .finally(() => setIsLoadingOn(false));
   }, [homeFilter, page]);
 
   useEffect(() => {
@@ -53,6 +59,7 @@ const HomePage = () => {
     <Container ref={containerRef} onScroll={onContainerScroll}>
       <HomeFilterBar />
       <ArticleList articles={homeArticles} />
+      {isLoadingOn && <LoadingSpinner />}
     </Container>
   );
 };
